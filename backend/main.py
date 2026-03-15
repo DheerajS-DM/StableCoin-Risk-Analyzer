@@ -18,7 +18,18 @@ import concurrent.futures
 from groq import Groq
 
 # --- Setup & Configuration ---
-
+app.add_middleware(
+    CORSMiddleware,
+    # Replace with your actual frontend URL once deployed
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://localhost:5173", 
+        "https://your-portfolio-site.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 env_path = Path(__file__).parent / '.env'
 load_dotenv(dotenv_path=env_path)
@@ -51,16 +62,12 @@ app = FastAPI(title="Crypto Value Analyzer", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    # Replace with your actual frontend URL once deployed
-    allow_origins=[
-        "http://localhost:3000", 
-        "http://localhost:5173", 
-        "https://your-portfolio-site.vercel.app"
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # --- Global Config ---
 
 TRACKED_CRYPTOS = [
